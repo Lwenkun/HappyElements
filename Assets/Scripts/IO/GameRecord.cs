@@ -43,6 +43,7 @@ public class GameRecord {
     //分数排行
     public ScoresRecord scoresRecord;
 
+    [Serializable]
     public class ScoresRecord
     {
         public int[] scores;
@@ -73,13 +74,14 @@ public class GameRecord {
     }
 
     private GameRecord() {
-        //加载数据
-        load();
         #if UNITY_STANDALONE || UNITY_WEBPLAYER || UNITY_EDITOR
         saveDir = Application.dataPath + "/Resources";
         #elif UNITY_IOS || UNITY_ANDROID || UNITY_WP8 || UNITY_IPHONE
         saveDir = Application.persistentDataPath;
         #endif
+        //加载数据
+        Debug.Log(saveDir);
+        load();
     }
 
     public static GameRecord getInstance() {
@@ -254,6 +256,7 @@ public class GameRecord {
     private T ReadRecord<T>(string jsonPath) {
 
         //string path = Application.dataPath + "/Resources/Test.json";
+        Debug.Log(jsonPath);
         if (!File.Exists(jsonPath))
         {
             return default(T);
@@ -267,6 +270,8 @@ public class GameRecord {
         }
 
         string json = sr.ReadToEnd();
+
+        Debug.Log(json);
 
         if (json.Length > 0)
         {

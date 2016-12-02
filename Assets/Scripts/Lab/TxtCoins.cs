@@ -13,6 +13,10 @@ public class TxtCoins : MonoBehaviour {
         gameRecord = GameRecord.getInstance(); 
 	}
 
+    void Start() {
+        ShowCoins();
+    }
+
     void ShowCoins() {
         txtCoins.text = gameRecord.userRecord.coins.ToString();
     }

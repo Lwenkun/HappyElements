@@ -12,9 +12,14 @@ using System.Collections.Generic;
 using UnityEngine.Networking;
 
 public class BtnSelect : MonoBehaviour {
+    
+
+    public AudioClip buyEfx;
+    public AudioClip selectEfx;
 
     private static List<BtnSelect> btns = new List<BtnSelect>();
 
+    private Text money;
     private GameRecord gameRecord;
     private GameRecord.PhoneRecord phoneRecord;
 
@@ -42,6 +47,7 @@ public class BtnSelect : MonoBehaviour {
         btn.onClick.AddListener(delegate() {
             OnClick();
         });
+        money = GameObject.Find("money_text").GetComponent<Text>();
         gameRecord = GameRecord.getInstance();
         InitState();
 	}
@@ -91,6 +97,7 @@ public class BtnSelect : MonoBehaviour {
             gameRecord.SetPhoneInUse(phoneRecord);
             ChangeBtnState(STATE_SELECTED);
             UnselectedOthers();
+            SoundManager.instance.playSingle(selectEfx);
             Debug.Log("type: " + type + ", you select this phone");
         }
         else if (state == STATE_NOTHAVE)
@@ -98,8 +105,12 @@ public class BtnSelect : MonoBehaviour {
             if (HasEnoughMoney())
             {
                 gameRecord.userRecord.coins -= price;
+                money.text = gameRecord.userRecord.coins.ToString();
                 ChangeBtnState(STATE_UNSELECTED);
-                gameRecord.userRecord.AddPhone(new GameRecord.PhoneRecord(type, false));
+                phoneRecord = new GameRecord.PhoneRecord(type, false);
+                gameRecord.userRecord.AddPhone(phoneRecord);
+                Register();
+                SoundManager.instance.playSingle(buyEfx);
                 Debug.Log("type: " + type + ", congratulation, you bought a new phone successfully");
             }
             else

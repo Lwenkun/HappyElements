@@ -8,17 +8,21 @@ using UnityEditor.Sprites;
 
 public class MenuControl : MonoBehaviour {
 
-	public GameObject money_text;
-	private int currentMoney = 8182;
-	Text text_money;
+    private GameRecord gameRecord;
+	private Text text_money;
 	// Use this for initialization
+
+    void Awake() {
+        text_money = GetComponent<Text> ();
+        gameRecord = GameRecord.getInstance();
+    }
+
 	void Start () {
-		text_money = money_text.GetComponent<Text> ();
-		text_money.text = currentMoney.ToString ();
+        text_money.text = gameRecord.userRecord.coins.ToString();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+        
 	}
 }

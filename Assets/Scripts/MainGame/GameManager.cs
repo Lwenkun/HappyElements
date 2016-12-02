@@ -25,6 +25,16 @@ using UnityEditor;
 
 public class GameManager : MonoBehaviour {
 
+    public AudioClip combo_0;
+    public AudioClip combo_1;
+    public AudioClip combo_2;
+    public AudioClip combo_n;
+
+    public AudioClip swap;
+    public AudioClip error;
+
+    public AudioClip gameOver;
+
     private GameRecord.UserRecord user;
     private GameRecord.PhoneRecord phoneInUse;
     private GameRecord.ScoresRecord scoresRecord;
@@ -78,6 +88,8 @@ public class GameManager : MonoBehaviour {
         costPerError = (20 - phoneInUse.elementRecords[Element.TYPE_GPU].level * 2);
         scorePerEli = (10 + (phoneInUse.elementRecords[Element.TYPE_CPU].level - 1) * 2);
 
+        SoundManager.instance.PlayBGM(SoundManager.instance.game);
+
     }
 
 	// Use this for initialization
@@ -115,6 +127,7 @@ public class GameManager : MonoBehaviour {
             {
                 //先将两个元素在 map 中的位置交换，实际位置并没有变化
                 SwapMapPosition(first, second);
+                SoundManager.instance.playSingle(swap);
                 //如果当前不能消除，那么把在 map 中的位置交换回去，并且播放往复运动的平移动画
                 if (!GameArea.instance.AnalyzeForCurrent())
                 {
@@ -166,6 +179,7 @@ public class GameManager : MonoBehaviour {
         scores -= costPerError;
         ui.txtError.ShowNum(errorCount);
         ui.txtScore.ShowNum(scores);
+        SoundManager.instance.playSingle(error);
     }
 
     private void ShowBatteryState() {
@@ -212,6 +226,7 @@ public class GameManager : MonoBehaviour {
     }
 
     private void GameOver(){
+        SoundManager.instance.playSingle(gameOver);
         //存储分数金币
         user.scores = scores;
         user.coins += coins;
@@ -226,7 +241,7 @@ public class GameManager : MonoBehaviour {
 
         StartCoroutine(ui.imgTimeOut.ShowTimeOut(delegate()
                 {
-                    SceneManager.LoadScene(0, LoadSceneMode.Single);
+                    SceneManager.LoadScene(4, LoadSceneMode.Single);
                 }));
     }
 
@@ -259,7 +274,6 @@ public class GameManager : MonoBehaviour {
             GameArea.instance.Fall();
 
             OnTurnOver();
-
         }
 
         //如果用户不能通过交换元素消除，那么游戏结束
@@ -277,6 +291,7 @@ public class GameManager : MonoBehaviour {
      * 单次或连续消除时，每轮消除完毕回调此方法
      **/
     private void OnTurnOver() {
+        PlayLevelSound();
         //先更新各种数据
         eliLevel++;
         UpdateEliNumList();
@@ -288,6 +303,25 @@ public class GameManager : MonoBehaviour {
         ShowTotalEliNum();
         ui.txtScore.ShowNum(scores);
       //  ShowScores();
+    }
+
+    private void PlayLevelSound() {
+        if (eliLevel == 0)
+        {
+            SoundManager.instance.playSingle(combo_0);
+        }
+        else if (eliLevel == 1)
+        {
+            SoundManager.instance.playSingle(combo_1);   
+        }
+        else if (eliLevel == 2)
+        {
+            SoundManager.instance.playSingle(combo_2);
+        }
+        else
+        {
+            SoundManager.instance.playSingle(combo_n);
+        }
     }
 
     private void UpdateEliNumList() {
@@ -325,6 +359,10 @@ public class GameManager : MonoBehaviour {
         Debug.Log("game pause");
         //清空连续消除的次数
         eliLevel = 0;
+    }
+
+    void OnDestroy() {
+        SoundManager.instance.PlayBGM(SoundManager.instance.other);
     }
 
 

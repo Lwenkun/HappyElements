@@ -18,16 +18,12 @@ public class RankControl : MonoBehaviour {
 	void Start () {
 		GameRecord gameRecord = GameRecord.getInstance();
 		int [] scores = gameRecord.scoresRecord.scores;
-		Debug.Log (scores);
+		Debug.Log(scores[0].ToString());
 		for (int count = 0; count < scores.Length; count++) {
 			texts [count] = ranks [count].GetComponent<Text> ();
-			texts[count].text = scores [count].ToString ();
+			texts[count].text = scores[count].ToString ();
 		}
 
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
 }

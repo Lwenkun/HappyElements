@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 
 public class Laboratory : MonoBehaviour {
 
+    public AudioClip btnEfx;
+
 	public Button lab_btn;
 
 	// Use this for initialization
@@ -15,6 +17,7 @@ public class Laboratory : MonoBehaviour {
 	}
 
 	void ClickBtn(){
+        SoundManager.instance.playSingle(btnEfx);
 		SceneManager.LoadScene (3, LoadSceneMode.Single);
 	}
 

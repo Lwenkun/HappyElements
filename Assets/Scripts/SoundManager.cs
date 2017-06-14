@@ -66,15 +66,5 @@ public class SoundManager : MonoBehaviour {
         }
     }
 
-//    public void ChangeBGM(AudioClip clip) {
-//
-//        if (musicSource.isPlaying)
-//        {
-//           
-//            musicSource.clip = clip;
-//        }
-//
-//    }
-        
 	
 }

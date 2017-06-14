@@ -9,12 +9,12 @@ public class UI {
         InitUIElement();
     }
 
-  //  private Image imgGameOver;
+    //private Image imgGameOver;
     public ImgLevel imgLevel;
     public ImgTimeOut imgTimeOut;
     public ImgBatteryState imgBatteryState;
 
-  //  private Button btnRestart;
+    //private Button btnRestart;
     public Button btnPuase;
   
     public TxtNum txtScoreCPU;
@@ -26,7 +26,6 @@ public class UI {
     public TxtNum txtScore;
 
     public SettingPanel settingPanel;
-
 
     private void InitUIElement() {
 

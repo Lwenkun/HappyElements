@@ -297,12 +297,12 @@ public class GameManager : MonoBehaviour {
         UpdateEliNumList();
         UpdateEliTotalNumList();
         CalScoresAndCoins();
-       //再更新UI
+        //再更新UI
         ui.imgLevel.ShowLevel(eliLevel);
-      //  ShowLevel();
+        //ShowLevel();
         ShowTotalEliNum();
         ui.txtScore.ShowNum(scores);
-      //  ShowScores();
+        //ShowScores();
     }
 
     private void PlayLevelSound() {

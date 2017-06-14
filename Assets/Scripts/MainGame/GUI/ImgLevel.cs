@@ -17,14 +17,12 @@ public class ImgLevel : BaseUIBehaviour {
 	}
 
     public void ShowLevel(int level) {
-      
         if (level < 2 || level > 9)
             return;
         StartCoroutine(LevelAnimation(imgLevel, level));
     }
 
     private IEnumerator LevelAnimation(Image imgLevel, int currLevel) {
-
         imgLevel.sprite = levels[currLevel];
         float timeLeft = 0.5f;
         float passTime = 0f;
